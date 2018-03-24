@@ -51,8 +51,8 @@ esp_err_t event_handler(void *ctx, system_event_t *event)
     return ESP_OK;
 }
 
-#define UDP_SERVER "192.168.11.1"
-#define UDP_PORT 5790
+#define UDP_SERVER CONFIG_UDP_SERVER_ADDRESS
+#define UDP_PORT CONFIG_UDP_PORT
 
 int sockfd = -1;
 
@@ -135,7 +135,6 @@ static void i2c_init(void)
 }
 
 extern void rn_task(void *arg);
-extern void dac_task(void *arg);
 
 void app_main(void)
 {
@@ -148,8 +147,8 @@ void app_main(void)
     ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_STA) );
     wifi_config_t sta_config = {
         .sta = {
-            .ssid = "hachidori_ap",
-            .password = "e15f44ecdff3a",
+            .ssid = CONFIG_SSID,
+            .password = CONFIG_SSID_PASSWORD,
             .bssid_set = false
         }
     };

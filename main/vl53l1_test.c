@@ -15,6 +15,11 @@
 VL53L1_Dev_t dev;
 VL53L1_DEV Dev = &dev;
 
+#define NRANGE 2
+struct rnpkt {
+    uint16_t range[NRANGE];
+};
+
 /* Autonomous ranging loop*/
 static void
 AutonomousLowPowerRangingTest(void)
@@ -56,16 +61,16 @@ AutonomousLowPowerRangingTest(void)
                     status = VL53L1_GetRangingMeasurementData(Dev, &RangingData);
                     if(status==0) {
 #if 0
-                            printf("%d,%d,%.2f,%.2f\n", RangingData.RangeStatus,
-                                   RangingData.RangeMilliMeter,
-                                   (RangingData.SignalRateRtnMegaCps/65536.0),
-                                   RangingData.AmbientRateRtnMegaCps/65336.0);
+                        printf("%d,%d,%.2f,%.2f\n", RangingData.RangeStatus,
+                               RangingData.RangeMilliMeter,
+                               (RangingData.SignalRateRtnMegaCps/65536.0),
+                               RangingData.AmbientRateRtnMegaCps/65336.0);
 #else
-                            if (roi & 1) {
-                                left = RangingData.RangeMilliMeter/10.0;
-                                printf("L %3.1f R %3.1f\n", right, left);
-                            } else
-                                right = RangingData.RangeMilliMeter/10.0;
+                        if (roi & 1) {
+                            left = RangingData.RangeMilliMeter;
+                            printf("L %3.1f R %3.1f\n", right/10.0, left/10.0);
+                        } else
+                            right = RangingData.RangeMilliMeter;
 #endif
                     }
                     if (++roi & 1) {
