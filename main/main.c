@@ -111,9 +111,9 @@ static void udp_task(void *arg)
 }
 
 
-#define I2C_MASTER_SCL_IO               33
-#define I2C_MASTER_SDA_IO               32
-#define I2C_MASTER_NUM                  I2C_NUM_1
+#define I2C_MASTER_SCL_IO               CONFIG_SCL_IO
+#define I2C_MASTER_SDA_IO               CONFIG_SDA_IO
+#define I2C_MASTER_NUM                  CONFIG_I2C_NUM
 #define I2C_MASTER_TX_BUF_DISABLE       0
 #define I2C_MASTER_RX_BUF_DISABLE       0
 #define I2C_MASTER_FREQ_HZ              400000

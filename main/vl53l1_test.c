@@ -93,11 +93,16 @@ AutonomousLowPowerRangingTest(void)
     //  return status;
 }
 
-static int i2c_handle = I2C_NUM_1;
+static int i2c_handle = CONFIG_I2C_NUM;
 
 void
 rn_task(void *pvParameters)
 {
+    // xshut high
+    gpio_set_direction(CONFIG_XSHUT_IO, GPIO_MODE_OUTPUT);
+    gpio_set_level(CONFIG_XSHUT_IO, 1);
+    vTaskDelay(200 / portTICK_PERIOD_MS);
+
     Dev->I2cHandle = &i2c_handle;
     Dev->I2cDevAddr = 0x52;
 
