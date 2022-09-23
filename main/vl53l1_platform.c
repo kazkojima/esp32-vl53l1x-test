@@ -66,7 +66,7 @@ _I2CWrite(VL53L1_DEV Dev, uint8_t *buf, uint32_t len)
     i2c_master_write_byte(cmd, (Dev->I2cDevAddr|WRITE_BIT), ACK_CHECK_EN);
     i2c_master_write(cmd, buf, len, ACK_CHECK_EN);
     i2c_master_stop(cmd);
-    esp_err_t ret = i2c_master_cmd_begin(*(Dev->I2cHandle), cmd, 1000/portTICK_RATE_MS);
+    esp_err_t ret = i2c_master_cmd_begin(*(Dev->I2cHandle), cmd, 1000/portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
     if (ret != ESP_OK) {
         return -1;
@@ -85,7 +85,7 @@ _I2CRead(VL53L1_DEV Dev, uint8_t *buf, uint32_t len)
     }
     i2c_master_read_byte(cmd, buf + len - 1, NACK_VAL);
     i2c_master_stop(cmd);
-    esp_err_t ret = i2c_master_cmd_begin(*(Dev->I2cHandle), cmd, 1000/portTICK_RATE_MS);
+    esp_err_t ret = i2c_master_cmd_begin(*(Dev->I2cHandle), cmd, 1000/portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
     if (ret != ESP_OK) {
         return -1;
